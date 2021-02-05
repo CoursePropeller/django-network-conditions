@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'django_network_conditions.middleware.LatencyMiddleware',
+    'network_simulate.middleware.LatencyMiddleware',
 ]
 
 ROOT_URLCONF = 'django_network_conditions.urls'
