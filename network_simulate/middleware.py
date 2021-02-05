@@ -6,7 +6,6 @@ from django.http import HttpResponseForbidden
 import asyncio
 from django.utils.decorators import async_only_middleware
 
-@async_only_middleware()
 class LatencyMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
@@ -21,21 +20,18 @@ class LatencyMiddleware(object):
         self.kb_per_second = settings.NETWORK_CONDITIONS["KB_PER_SECOND"]
         self.delay = np.random.normal(self.latency, self.jitter)
         self.not_response = False
-        # One-time configuration and initialization.
 
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
+        response = self.get_response(request)
         if self.debug:
             if self.delay < 0:
                 self.delay = 0
-            self.delay = 50
             threshold = norm.ppf((1 - self.timeout_pct/100), self.latency, self.jitter)
             print("threshold", self.delay, threshold)
-            
             if self.delay < threshold: 
                 print("random delay", self.delay)
-                response = self.get_response(request)
                 response_datasaze = len(response.content)
                 print("respond data size", response_datasaze)
                 transmit_delay = response_datasaze / self.kb_per_second
@@ -44,6 +40,6 @@ class LatencyMiddleware(object):
                 print("finally", self.delay)
                 print("delaying...")
                 time.sleep(self.delay)
-                return response
             else:
                 return HttpResponseForbidden()
+        return response
