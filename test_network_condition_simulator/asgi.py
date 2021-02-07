@@ -1,5 +1,5 @@
 """
-ASGI config for django_network_conditions project.
+ASGI config for test_network_condition_simulator project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_network_conditions.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_network_condition_simulator.settings')
 
 application = get_asgi_application()

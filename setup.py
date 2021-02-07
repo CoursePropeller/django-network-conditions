@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = 'django-network-conditions',
-    version = '0.1',
+    version = '1.0',
     packages = ['django_network_conditions'],
     url = 'http://pypi.python.org/pypi/django-network-conditions',
     license = 'LICENSE',
