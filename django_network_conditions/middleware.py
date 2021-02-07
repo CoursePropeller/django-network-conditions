@@ -3,9 +3,6 @@ import numpy as np
 from scipy.stats import norm
 from django.conf import settings
 from django.http import HttpResponseForbidden   
-import asyncio
-from django.utils.decorators import async_only_middleware
-
 class LatencyMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
@@ -19,7 +16,6 @@ class LatencyMiddleware(object):
         self.timeout_pct = settings.NETWORK_CONDITIONS["TIMEOUT_PCT"]
         self.kb_per_second = settings.NETWORK_CONDITIONS["KB_PER_SECOND"]
         self.delay = np.random.normal(self.latency, self.jitter)
-        self.not_response = False
 
     def __call__(self, request):
         # Code to be executed for each request before
