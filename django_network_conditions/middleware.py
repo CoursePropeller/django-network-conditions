@@ -16,6 +16,7 @@ class LatencyMiddleware(object):
         self.timeout_pct = settings.NETWORK_CONDITIONS["TIMEOUT_PCT"]
         self.kb_per_second = settings.NETWORK_CONDITIONS["KB_PER_SECOND"]
         self.delay = np.random.normal(self.latency, self.jitter)
+        self.print_logs = settings.NETWORK_CONDITIONS["PRINT_LOGS"]
 
     def __call__(self, request):
         # Code to be executed for each request before
@@ -25,17 +26,18 @@ class LatencyMiddleware(object):
             if self.delay < 0:
                 self.delay = 0
             threshold = norm.ppf((1 - self.timeout_pct/100), self.latency, self.jitter)
-            print("threshold", self.delay, threshold)
-            if self.delay < threshold: 
-                print("random delay", self.delay)
+            if self.delay < threshold:                
                 response_datasaze = len(response.content)
-                print("respond data size", response_datasaze)
                 transmit_delay = response_datasaze / self.kb_per_second
-                print("transmission delay", transmit_delay)
-                self.delay += transmit_delay
-                print("finally", self.delay)
-                print("delaying...")
-                time.sleep(self.delay)
+                final_delay = self.delay + transmit_delay
+                if self.print_logs:
+                    print("threshold", threshold)
+                    print("random delay", self.delay)
+                    print("respond data size", response_datasaze)
+                    print("transmission delay", transmit_delay)
+                    print("finally", final_delay)
+                    print("delaying...")
+                time.sleep(final_delay)
             else:
                 return HttpResponseForbidden()
         return response
