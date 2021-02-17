@@ -23,7 +23,7 @@ jobs:
           command: |
             . venv/bin/activate
             mkdir test-results
-            flake8 --output-file=test-results/report.xml
+            flake8
       - store_artifacts:
           path: test-results
           destination: tr1
