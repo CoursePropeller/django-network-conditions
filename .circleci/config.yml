@@ -7,7 +7,6 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           name: install dependencies
@@ -24,7 +23,7 @@ jobs:
           command: |
             . venv/bin/activate
             mkdir test-results
-            flake8 ./ --output-file=test-results/output.xml
+            flake8 ./ --output-file=test-results/report.xml
       - store_artifacts:
           path: test-results
           destination: test-results
