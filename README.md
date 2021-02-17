@@ -1,6 +1,4 @@
-==============
-django-network-conditions
-==============
+# django-network-conditions
 
 A Django package to simulate different network conditions during local development.
 
@@ -27,3 +25,5 @@ For example::
         'TIMEOUT_PCT': 5, #the percentage of requests that time out
         'PRINT_LOGS': False # if True, it shows the status.
     }
+
+# Circle Ci
