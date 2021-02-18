@@ -23,7 +23,8 @@ jobs:
           command: |
             . venv/bin/activate
             mkdir test-results
-            flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --output-file=test-results/report.xml
+            flake8 --output-file=test-results/flake8.txt
+            flake8_junit test-results/flake8.txt test-results/flake8_junit.xml
       - store_artifacts:
           path: test-results
           destination: tr1
