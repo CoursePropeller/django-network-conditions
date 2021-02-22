@@ -28,9 +28,10 @@ jobs:
       - run:
           name: making html using sphinx
           command: |
+            . venv/bin/activate
+            sphinx-build --version
             cd docs
             make html -d
-            sphinx-build --version
             mv build/html/ ../test-results/
       - store_artifacts:
           path: test-results
