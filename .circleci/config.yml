@@ -29,7 +29,7 @@ jobs:
           name: making html using sphinx
           command: |
             cd docs
-            make html
+            make html -d
             mv build/html/ ../test-results/
       - store_artifacts:
           path: test-results
